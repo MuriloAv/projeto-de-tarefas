@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gerenciador de Tarefas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />
+<script src="/webjars/jquery/3.5.1/jquery.slim.min.js"></script>
+
+<script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="/webjars/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+	<h1>Lista de Tarefas</h1>
+	<div th:replace="fragments/alert"></div> 
+
+	<table>
+		<thead>
+			<tr>
+				<th>Identificação da Tarefa</th>
+				<th>Nome da Tarefa</th>
+				<th>Data entrega</th>
+				<th>Responsável</th>
+				<th colspan="2">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tarefa : ${tarefas}">
+				<td th:text="${tarefa.id}">1</td>
+				<td th:text="${tarefa.nome}">Criação de conteúdo</td>
+				<td th:text="${#temporals.format(tarefa.dataEntrega, 'dd/MM/yyyy')}">15/08/2024</td>
+				<td th:text="${tarefa.responsavel}">Luciane</td>
+				<td>
+					<a class="btn btn-info btn-sm" th:href="@{/tarefas/editar/{id}(id=${tarefa.id})}" role="button">
+						<span class="oi oi-brush" title="Editar" aria-hidden="true">Editar</span>
+					</a>
+				</td>
+				<td>
+					<button th:id="${'btn_tarefas/excluir/' + tarefa.id}" type="button"
+						class="btn btn-danger btn-sm" data-toggle="modal"
+						data-target="#myModal">	Excluir </button></td>					
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:replace="~{fragments/modal :: modal}"></div>
+
+	<p>
+		<a th:href="@{/}">Return to home</a>
+	</p>
+	
+	<div>&copy; 2024 modelo estático</div>
+	<div th:replace="~{fragments/script}"></div>
+
+</body>
+
+</html>
